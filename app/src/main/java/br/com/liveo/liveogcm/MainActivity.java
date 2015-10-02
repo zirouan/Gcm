@@ -21,15 +21,22 @@ import br.com.liveo.liveogcm.util.Util;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final String STATE_LISTA_ENTRADA = "mListaEntrada_position";
+    static final String STATE_LISTA_ENTRADA_DADOS = "mListaEntrada_dados";
+    static final String STATE_LISTA_SAIDA = "mListaSaida_position";
+    static final String STATE_LISTA_SAIDA_DADOS = "mListaSaida_dados";
+
     DataUpdateReceiver dataUpdateReceiver;
 
     ListView mListaEntrada;
+    int mPosicaoAtualEntrada = 0;
     ArrayAdapter<String> mlstEntradaAdapter;
-    ArrayList<String> mEntrada;
+    ArrayList<String> mEntrada = new ArrayList<>();
 
     ListView mListaSaida;
+    int mPosicaoAtualSaida = 0;
     ArrayAdapter<String> mlstSaidaAdapter;
-    ArrayList<String> mSaida;
+    ArrayList<String> mSaida = new ArrayList<>();
 
     @Override
     protected void onResume() {
@@ -43,6 +50,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        mPosicaoAtualEntrada = mListaEntrada.getFirstVisiblePosition();
+        mPosicaoAtualSaida = mListaSaida.getFirstVisiblePosition();
+
+        outState.putInt(STATE_LISTA_ENTRADA, mPosicaoAtualEntrada);
+        outState.putStringArrayList(STATE_LISTA_ENTRADA_DADOS, mEntrada);
+        outState.putInt(STATE_LISTA_SAIDA, mPosicaoAtualSaida);
+        outState.putStringArrayList(STATE_LISTA_SAIDA_DADOS, mSaida);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore state members from saved instance
+        mPosicaoAtualEntrada = savedInstanceState.getInt(STATE_LISTA_ENTRADA);
+        mEntrada = savedInstanceState.getStringArrayList(STATE_LISTA_ENTRADA_DADOS);
+        mPosicaoAtualSaida = savedInstanceState.getInt(STATE_LISTA_SAIDA);
+        mSaida = savedInstanceState.getStringArrayList(STATE_LISTA_SAIDA_DADOS);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -52,11 +83,18 @@ public class MainActivity extends AppCompatActivity {
         mListaEntrada = (ListView) findViewById(R.id.lstEntrada);
         mListaSaida = (ListView) findViewById(R.id.lstSaida);
 
-        mEntrada = new ArrayList<String>();
-        mSaida = new ArrayList<String>();
+        if (savedInstanceState != null) {
+            mPosicaoAtualEntrada = savedInstanceState.getInt(STATE_LISTA_ENTRADA);
+            mEntrada = savedInstanceState.getStringArrayList(STATE_LISTA_ENTRADA_DADOS);
+            mPosicaoAtualSaida = savedInstanceState.getInt(STATE_LISTA_SAIDA);
+            mSaida = savedInstanceState.getStringArrayList(STATE_LISTA_SAIDA_DADOS);
 
-        mlstEntradaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mEntrada);
-        mlstSaidaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mSaida);
+            mListaEntrada.setSelection(mPosicaoAtualEntrada);
+            mListaSaida.setSelection(mPosicaoAtualSaida);
+        }
+
+        mlstEntradaAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mEntrada);
+        mlstSaidaAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mSaida);
 
         mListaEntrada.setAdapter(mlstEntradaAdapter);
         mListaSaida.setAdapter(mlstSaidaAdapter);
@@ -65,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addInfo(mlstSaidaAdapter, mSaida, "Registrando GCM ID...");
+                addInfo(mlstSaidaAdapter, mSaida, getString(R.string.registro_gcm));
                 setupGCM();
             }
         });
@@ -79,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     GcmHelper.register(this, new GcmHelper.TheRegisterDevice() {
                         @Override
                         public void toRegister(String regId, boolean inBackground) {
-                            addInfo(mlstSaidaAdapter, mSaida, "GCM ID: " + regId);
+                            addInfo(mlstSaidaAdapter, mSaida, getString(R.string.gcm_registred_id, regId));
                         }
                     });
 
@@ -106,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 String msg = intent.getStringExtra("gcm_texto");
 
                 if (msg == null)
-                    msg = "Notificação sem texto";
+                    msg = getString(R.string.notificacao_sem_texto);
 
                 addInfo(mlstEntradaAdapter, mEntrada, msg);
             }

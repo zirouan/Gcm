@@ -8,4 +8,7 @@
 
     <string name="error_gcmplay_unavailable">Google Play Services não disponível</string>
     <string name="error_gcmplay_register_failure">Falha ao registrar no Google Play Services. Verifique sua conexão.</string>
+    <string name="notificacao_sem_texto">Notificação sem texto</string>
+    <string name="registro_gcm">Registrando GCM ID...</string>
+    <string name="gcm_registred_id">GCM ID: %1$s</string>
 </resources>

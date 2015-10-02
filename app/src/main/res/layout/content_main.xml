@@ -13,40 +13,57 @@
     tools:showIn="@layout/activity_main">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="2">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ENTRADA"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-
-        <ListView
-            android:id="@+id/lstEntrada"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:stackFromBottom="true"
-            android:transcriptMode="alwaysScroll" />
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SAÍDA"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ENTRADA"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
-        <ListView
-            android:id="@+id/lstSaida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            <ListView
+                android:id="@+id/lstEntrada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stackFromBottom="true"
+                android:transcriptMode="alwaysScroll" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:stackFromBottom="true"
-            android:transcriptMode="alwaysScroll" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SAÍDA"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/lstSaida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:stackFromBottom="true"
+                android:transcriptMode="alwaysScroll" />
+        </LinearLayout>
     </LinearLayout>
+
 
 </RelativeLayout>
