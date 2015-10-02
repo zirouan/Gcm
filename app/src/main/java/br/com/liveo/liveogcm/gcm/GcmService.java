@@ -16,6 +16,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import br.com.liveo.liveogcm.util.Constant;
 import br.com.liveo.liveogcm.MainActivity;
 import br.com.liveo.liveogcm.R;
+import br.com.liveo.liveogcm.util.Util;
 
 public class GcmService extends IntentService {
     public static final int NOTIFICATION_ID = 1;
@@ -60,5 +61,9 @@ public class GcmService extends IntentService {
                         .setContentIntent(pendingIntent);
 
         notificationManagerCompat.notify(NOTIFICATION_ID, mBuilder.build());
+
+        Intent i = new Intent(Util.REFRESH_DATA_INTENT);
+        i.putExtra("gcm_texto", msg);
+        sendBroadcast(i);
     }
 }

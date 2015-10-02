@@ -10,6 +10,9 @@ import java.nio.channels.NoConnectionPendingException;
  * Created by Rudsonlive on 02/10/15.
  */
 public class Util {
+
+    public static final String REFRESH_DATA_INTENT = "REFRESH_DATA_INTENT";
+
     public static boolean checkConnection(Context context) throws NoConnectionPendingException {
 
         ConnectivityManager connectivity = (ConnectivityManager) context
