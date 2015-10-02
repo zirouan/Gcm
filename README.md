@@ -1,5 +1,4 @@
 # Gcm
-Sample project using gcm
 
 <b>O que devo alterar antes de testar o projeto?</b>
 
