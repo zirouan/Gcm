@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -35,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (dataUpdateReceiver == null)
+        if (dataUpdateReceiver == null) {
             dataUpdateReceiver = new DataUpdateReceiver();
+        }
 
         IntentFilter intentFilter = new IntentFilter(Util.REFRESH_DATA_INTENT);
         registerReceiver(dataUpdateReceiver, intentFilter);
@@ -46,17 +46,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mListaEntrada = (ListView) findViewById(R.id.lstEntrada);
         mListaSaida = (ListView) findViewById(R.id.lstSaida);
 
-        mEntrada = new ArrayList<String>();
-        mSaida = new ArrayList<String>();
+        mEntrada = new ArrayList<>();
+        mSaida = new ArrayList<>();
 
-        mlstEntradaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mEntrada);
-        mlstSaidaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mSaida);
+        mlstEntradaAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mEntrada);
+        mlstSaidaAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mSaida);
 
         mListaEntrada.setAdapter(mlstEntradaAdapter);
         mListaSaida.setAdapter(mlstSaidaAdapter);
@@ -105,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
             if (intent.getAction().equals(Util.REFRESH_DATA_INTENT)) {
                 String msg = intent.getStringExtra("gcm_texto");
 
-                if (msg == null)
+                if (msg == null) {
                     msg = "Notificação sem texto";
+                }
 
                 addInfo(mlstEntradaAdapter, mEntrada, msg);
             }
