@@ -5,8 +5,8 @@ Sample project using gcm
 
 1 - No arquivo string.xml você irá alterar os atributos "sender_id" e "sender url". 
 
-<string name="sender_id">Project number - Google API console</string> 
-<string name="sender url">http://[your URL]/gcmserver.php</string>
+    <string name="sender_id">Project number - Google API console</string>
+    <string name="sender_url">http://[your URL]/gcmserver.php</string>
 
 2 - Na classe "GcmHelper.java" você irá criar a sua rotina de registro no método "toSendRegistrationIdServer"
 
