@@ -34,10 +34,10 @@ Sample project using gcm
         }
     }
 ````
-3 - Caso não tenho um back-end pronto, você pode utilizar o arquivo <a href="https://gist.github.com/rudsonlive/3ab8d4693dc82dedd000" target="_blank">"gcmserver.php"</a> para fazer os seus testes. Lebrando que você deve informar sua Chave de API criada no Console Google Api Ex: "AIzaSyB-yNd_TuJWh1urQo45w_9pziIMyO360n9". <a href="https://developers.google.com/mobile/add" target="_blank">Criar chave de Api</a>
-Será precisar criar um arquivo chamado "dispositivos.txt" na mesmo local do <a href="https://gist.github.com/rudsonlive/3ab8d4693dc82dedd000" target="_blank">"gcmserver.php"</a> pois, ele irá guardos todos os Ids registrados para o envio da mensagem.
+3 - Caso não tenho um back-end pronto, você pode utilizar o arquivo <a href="https://gist.github.com/rudsonlive/3ab8d4693dc82dedd000" target="_blank">gcmserver.php</a> para fazer os seus testes. Lebrando que você deve informar sua Chave de API criada no Console Google Api Ex: "AIzaSyB-yNd_TuJWh1urQo45w_9pziIMyO360n9". <a href="https://developers.google.com/mobile/add" target="_blank">Criar chave de Api</a> <br>
+Será preciso criar um arquivo chamado "dispositivos.txt" no mesmo local do <a href="https://gist.github.com/rudsonlive/3ab8d4693dc82dedd000" target="_blank">gcmserver.php</a> pois, ele irá guardar todos os Ids registrados para o envio da mensagem.
 
-4 - Depois de efetuar o registro do usuário você pode utilizar o arquivo <a href="https://gist.github.com/rudsonlive/912a2a2b4d3cf1bb2f3d" target="_blank">"index.html"</a> para fazer o envio das mensagens.
+4 - Depois de efetuar o registro do usuário, você pode utilizar o arquivo <a href="https://gist.github.com/rudsonlive/912a2a2b4d3cf1bb2f3d" target="_blank">index.html</a> para fazer o envio das mensagens.
 
 <b>Documentação:</b> <a href="https://developers.google.com/cloud-messaging/gcm" target="_blank">Google Cloud Messaging</a><br>
 <b>Crédito especial:</b> <a href="https://plus.google.com/u/0/+EduardoGorio/about" target="_blank">Eduardo Gorio</a>
