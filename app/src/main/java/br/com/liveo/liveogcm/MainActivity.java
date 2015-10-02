@@ -20,22 +20,23 @@ import br.com.liveo.liveogcm.util.Util;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String STATE_LISTA_ENTRADA = "mListaEntrada_position";
-    static final String STATE_LISTA_ENTRADA_DADOS = "mListaEntrada_dados";
-    static final String STATE_LISTA_SAIDA = "mListaSaida_position";
-    static final String STATE_LISTA_SAIDA_DADOS = "mListaSaida_dados";
+    private ListView mListaEntrada;
+    private int mPosicaoAtualEntrada = 0;
+    private ArrayAdapter<String> mlstEntradaAdapter;
+    private ArrayList<String> mEntrada = new ArrayList<>();
 
-    DataUpdateReceiver dataUpdateReceiver;
+    private ListView mListaSaida;
+    private int mPosicaoAtualSaida = 0;
+    private ArrayAdapter<String> mlstSaidaAdapter;
+    private ArrayList<String> mSaida = new ArrayList<>();
 
-    ListView mListaEntrada;
-    int mPosicaoAtualEntrada = 0;
-    ArrayAdapter<String> mlstEntradaAdapter;
-    ArrayList<String> mEntrada = new ArrayList<>();
+    private DataUpdateReceiver dataUpdateReceiver;
 
-    ListView mListaSaida;
-    int mPosicaoAtualSaida = 0;
-    ArrayAdapter<String> mlstSaidaAdapter;
-    ArrayList<String> mSaida = new ArrayList<>();
+    private static final String STATE_LISTA_ENTRADA = "mListaEntrada_position";
+    private static final String STATE_LISTA_ENTRADA_DADOS = "mListaEntrada_dados";
+
+    private static final String STATE_LISTA_SAIDA = "mListaSaida_position";
+    private static final String STATE_LISTA_SAIDA_DADOS = "mListaSaida_dados";
 
     @Override
     protected void onResume() {
@@ -144,8 +145,9 @@ public class MainActivity extends AppCompatActivity {
             if (intent.getAction().equals(Util.REFRESH_DATA_INTENT)) {
                 String msg = intent.getStringExtra("gcm_texto");
 
-                if (msg == null)
+                if (msg == null) {
                     msg = getString(R.string.notificacao_sem_texto);
+                }
 
                 addInfo(mlstEntradaAdapter, mEntrada, msg);
             }
