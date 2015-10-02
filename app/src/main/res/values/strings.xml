@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">LiveoGCM</string>
+    <string name="action_settings">Settings</string>
+
+    <!--GCM-->
+    <string name="sender_id">Project number - Google API console</string>
+    <string name="sender_url">http://[your URL]/gcmserver.php</string>
+
+    <string name="warning_gcmplay_successful">"Registrado com sucesso!</string>
+    <string name="error_gcmplay_unavailable">Google Play Services não disponível</string>
+    <string name="error_gcmplay_register_failure">Falha ao registrar no Google Play Services. Verifique sua conexão.</string>
+</resources>
