@@ -16,27 +16,23 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import br.com.liveo.liveogcm.gcm.GcmHelper;
+import br.com.liveo.liveogcm.util.Constant;
 import br.com.liveo.liveogcm.util.Util;
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView mListaEntrada;
     private int mPosicaoAtualEntrada = 0;
-    private ArrayAdapter<String> mlstEntradaAdapter;
-    private ArrayList<String> mEntrada = new ArrayList<>();
 
     private ListView mListaSaida;
     private int mPosicaoAtualSaida = 0;
+
+    private ArrayAdapter<String> mlstEntradaAdapter;
+    private ArrayList<String> mEntrada = new ArrayList<>();
+
     private ArrayAdapter<String> mlstSaidaAdapter;
-    private ArrayList<String> mSaida = new ArrayList<>();
-
     private DataUpdateReceiver dataUpdateReceiver;
-
-    private static final String STATE_LISTA_ENTRADA = "mListaEntrada_position";
-    private static final String STATE_LISTA_ENTRADA_DADOS = "mListaEntrada_dados";
-
-    private static final String STATE_LISTA_SAIDA = "mListaSaida_position";
-    private static final String STATE_LISTA_SAIDA_DADOS = "mListaSaida_dados";
+    private ArrayList<String> mSaida = new ArrayList<>();
 
     @Override
     protected void onResume() {
@@ -51,14 +47,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        unregisterReceiver(dataUpdateReceiver);
+        super.onStop();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         mPosicaoAtualEntrada = mListaEntrada.getFirstVisiblePosition();
         mPosicaoAtualSaida = mListaSaida.getFirstVisiblePosition();
 
-        outState.putInt(STATE_LISTA_ENTRADA, mPosicaoAtualEntrada);
-        outState.putStringArrayList(STATE_LISTA_ENTRADA_DADOS, mEntrada);
-        outState.putInt(STATE_LISTA_SAIDA, mPosicaoAtualSaida);
-        outState.putStringArrayList(STATE_LISTA_SAIDA_DADOS, mSaida);
+        outState.putInt(Constant.STATE_LISTA_ENTRADA, mPosicaoAtualEntrada);
+        outState.putStringArrayList(Constant.STATE_LISTA_ENTRADA_DADOS, mEntrada);
+        outState.putInt(Constant.STATE_LISTA_SAIDA, mPosicaoAtualSaida);
+        outState.putStringArrayList(Constant.STATE_LISTA_SAIDA_DADOS, mSaida);
 
         super.onSaveInstanceState(outState);
     }
@@ -68,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         // Restore state members from saved instance
-        mPosicaoAtualEntrada = savedInstanceState.getInt(STATE_LISTA_ENTRADA);
-        mEntrada = savedInstanceState.getStringArrayList(STATE_LISTA_ENTRADA_DADOS);
-        mPosicaoAtualSaida = savedInstanceState.getInt(STATE_LISTA_SAIDA);
-        mSaida = savedInstanceState.getStringArrayList(STATE_LISTA_SAIDA_DADOS);
+        mPosicaoAtualEntrada = savedInstanceState.getInt(Constant.STATE_LISTA_ENTRADA);
+        mEntrada = savedInstanceState.getStringArrayList(Constant.STATE_LISTA_ENTRADA_DADOS);
+        mPosicaoAtualSaida = savedInstanceState.getInt(Constant.STATE_LISTA_SAIDA);
+        mSaida = savedInstanceState.getStringArrayList(Constant.STATE_LISTA_SAIDA_DADOS);
     }
 
     @Override
@@ -86,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
         mListaSaida = (ListView) findViewById(R.id.lstSaida);
 
         if (savedInstanceState != null) {
-            mPosicaoAtualEntrada = savedInstanceState.getInt(STATE_LISTA_ENTRADA);
-            mEntrada = savedInstanceState.getStringArrayList(STATE_LISTA_ENTRADA_DADOS);
-            mPosicaoAtualSaida = savedInstanceState.getInt(STATE_LISTA_SAIDA);
-            mSaida = savedInstanceState.getStringArrayList(STATE_LISTA_SAIDA_DADOS);
+            mPosicaoAtualEntrada = savedInstanceState.getInt(Constant.STATE_LISTA_ENTRADA);
+            mEntrada = savedInstanceState.getStringArrayList(Constant.STATE_LISTA_ENTRADA_DADOS);
+            mPosicaoAtualSaida = savedInstanceState.getInt(Constant.STATE_LISTA_SAIDA);
+            mSaida = savedInstanceState.getStringArrayList(Constant.STATE_LISTA_SAIDA_DADOS);
 
             mListaEntrada.setSelection(mPosicaoAtualEntrada);
             mListaSaida.setSelection(mPosicaoAtualSaida);

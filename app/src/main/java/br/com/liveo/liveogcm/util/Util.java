@@ -22,12 +22,10 @@ public class Util {
             return false;
         } else {
 
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            NetworkInfo info = connectivity.getActiveNetworkInfo();
             if (info != null) {
-                for (NetworkInfo anInfo : info) {
-                    if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
-                        return true;
-                    }
+                if (info.getState() == NetworkInfo.State.CONNECTED) {
+                    return true;
                 }
             }
         }

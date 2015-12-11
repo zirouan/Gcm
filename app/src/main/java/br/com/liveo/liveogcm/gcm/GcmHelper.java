@@ -12,12 +12,13 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-import br.com.liveo.liveogcm.util.Constant;
 import br.com.liveo.liveogcm.R;
+import br.com.liveo.liveogcm.util.Constant;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
 
 
 public class GcmHelper {
@@ -90,10 +91,6 @@ public class GcmHelper {
                 String regid = null;
                 try {
                     regid = gcm.register(context.getString(R.string.sender_id));
-
-                    toSendRegistrationIdServer(context, regid);
-                    saveRegistrationId(context, regid);
-
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -101,33 +98,41 @@ public class GcmHelper {
             }
 
             @Override
-            protected void onPostExecute(String msg) {
-                listener.toRegister(msg, true);
+            protected void onPostExecute(String key) {
+                try {
+                    toSendRegistrationIdServer(context, key, listener);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }.execute();
     }
 
-    private static void toSendRegistrationIdServer(Context context, String key) throws IOException {
+    private static void toSendRegistrationIdServer(final Context context, final String key,
+                                                   final TheRegisterDevice listener) throws IOException {
 
-        try {
-            URL url = new URL(context.getString(R.string.sender_url));
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(context.getString(R.string.sender_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setDoOutput(true);
+        GcmRetrofit gcmRetrofit = retrofit.create(GcmRetrofit.class);
+        Call<String> venuesCall = gcmRetrofit.toSendRegistration("registrar", key);
+        venuesCall.enqueue(new Callback<String>() {
 
-            OutputStream os = connection.getOutputStream();
-            os.write(("acao=registrar&regId=" + key).getBytes());
-            os.flush();
-            os.close();
-            connection.connect();
-            int responseCode = connection.getResponseCode();
-            if (responseCode != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Error saving server");
+            @Override
+            public void onResponse(retrofit.Response<String> response, Retrofit retrofit) {
+
+                if (response != null){
+                    saveRegistrationId(context, key);
+                    listener.toRegister(key, true);
+                }
             }
-        }catch (Exception e){
-            e.getStackTrace();
-        }
+
+            @Override
+            public void onFailure(Throwable t) {
+            }
+        });
     }
 
     private static SharedPreferences getGCMPreferences(Context context) {

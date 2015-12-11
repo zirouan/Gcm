@@ -13,4 +13,10 @@ public class Constant {
     public static String PROP_REG_ID = "registration_id";
     public static String PROP_APP_VERSION = "appVersion";
 
+    public static String STATE_LISTA_ENTRADA = "mListaEntrada_position";
+    public static String STATE_LISTA_ENTRADA_DADOS = "mListaEntrada_dados";
+
+    public static String STATE_LISTA_SAIDA = "mListaSaida_position";
+    public static String STATE_LISTA_SAIDA_DADOS = "mListaSaida_dados";
+
 }
